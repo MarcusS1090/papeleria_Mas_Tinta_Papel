@@ -1,0 +1,147 @@
+tablas:
+
+1.Tabla: Producto °
+Atributos:
+ProductoID (PK, INT)
+Nombre (VARCHAR)
+Descripción (TEXT)
+Precio (DECIMAL)
+StockDisponible (INT)
+
+2.Tabla: Categoría °
+Atributos:
+CategoríaID (PK, INT)
+NombreCategoría (VARCHAR)
+
+3.Tabla: Producto_Categoría °
+Atributos:
+ProductoID (PK, FK, INT)
+CategoríaID (PK, FK, INT)
+
+4.Tabla: CarritoCompras °
+Atributos:
+CarritoID (PK, INT)
+UsuarioID (FK, INT)
+FechaCreación (DATETIME)
+
+5.Tabla: ItemCarrito °
+Atributos:
+ItemID (PK, INT)
+CarritoID (FK, INT)
+ProductoID (FK, INT)
+Cantidad (INT)
+
+6.Tabla: Orden °
+Atributos:
+OrdenID (PK, INT)
+UsuarioID (FK, INT)
+FechaOrden (DATETIME)
+Estado (VARCHAR)
+
+7.Tabla: DetalleOrden °
+Atributos:
+DetalleID (PK, INT)
+OrdenID (FK, INT)
+ProductoID (FK, INT)
+Cantidad (INT)
+PrecioUnitario (DECIMAL)
+
+8.Tabla: Usuario °
+Atributos:
+UsuarioID (PK, INT)
+Nombre (VARCHAR)
+Apellido (VARCHAR)
+CorreoElectronico (VARCHAR)
+Contraseña (VARCHAR)
+FechaRegistro (DATE)
+
+9.Tabla: Dirección °
+Atributos:
+DirecciónID (PK, INT)
+UsuarioID (FK, INT)
+Calle (VARCHAR)
+Ciudad (VARCHAR)
+País (VARCHAR)
+CódigoPostal (VARCHAR)
+
+10.Tabla: MétodoPago °
+Atributos:
+MétodoPagoID (PK, INT)
+NombreMétodo (VARCHAR)
+
+11.Tabla: OrdenPago °
+Atributos:
+OrdenPagoID (PK, INT)
+OrdenID (FK, INT)
+MétodoPagoID (FK, INT)
+Monto (DECIMAL)
+
+12.Tabla: Producto_Favorito °
+Atributos:
+UsuarioID (PK, FK, INT)
+ProductoID (PK, FK, INT)
+
+13.Tabla: Proveedor °
+Atributos:
+ProveedorID (PK, INT)
+NombreProveedor (VARCHAR)
+Contacto (VARCHAR)
+CorreoContacto (VARCHAR)
+TeléfonoContacto (VARCHAR)
+
+14.Tabla: Producto_Proveedor °
+Atributos:
+ProductoID (PK, FK, INT)
+ProveedorID (PK, FK, INT)
+
+15.Tabla: Producto_Favorito °
+Atributos:
+UsuarioID (PK, FK, INT)
+ProductoID (PK, FK, INT)
+
+16.Tabla: TipoUsuario °
+Atributos:
+TipoUsuarioID (PK, INT)
+NombreTipoUsuario (VARCHAR)
+
+tabla puente:
+
+17.Tabla: Usuario_TipoUsuario °
+Atributos:
+UsuarioID (PK, FK, INT)
+TipoUsuarioID (PK, FK, INT)
+
+cardinalidad:
+
+Usuario (1) - (0,N) CarritoCompras
+Un usuario puede tener varios carritos de compras, pero no es obligatorio tener uno.
+
+CarritoCompras (1) - (0,N) ItemCarrito
+Un carrito de compras puede contener varios ítems, pero no es obligatorio tener uno.
+
+Usuario (1) - (0,N) Orden
+Un usuario puede realizar varias órdenes, pero no es obligatorio realizar una orden.
+
+Orden (1) - (1,N) DetalleOrden
+Una orden debe tener al menos un detalle asociado, pero puede tener varios detalles.
+
+Usuario (1) - (0,N) Dirección
+Un usuario puede tener varias direcciones de envío, pero no es obligatorio tener una.
+
+Orden (1) - (1,1) OrdenPago
+Cada orden debe tener un único registro de pago asociado.
+
+Producto (1) - (0,N) Producto_Categoría
+Un producto puede pertenecer a varias categorías, pero no es obligatorio pertenecer a ninguna.
+
+Usuario (1) - (0,N) Producto_Favorito
+Un usuario puede marcar varios productos como favoritos, pero no es obligatorio marcar ninguno.
+
+Usuario (1) - (0,N) TipoUsuario
+Un usuario puede tener varios tipos de roles, como "Cliente", "Administrador", etc. También puede no tener ningún rol específico.
+
+Usuario (1) - (0,N) TipoUsuario (Tabla puente) (0,N) TipoUsuario
+Un usuario puede tener múltiples roles y cada rol puede estar asociado a varios usuarios.
+
+Esta estructura permite que un usuario tenga uno o varios roles (por ejemplo, "Cliente" y "Administrador"). Cada tipo de usuario puede tener diferentes permisos y acceso a diferentes funcionalidades dentro de la papelería virtual.
+
